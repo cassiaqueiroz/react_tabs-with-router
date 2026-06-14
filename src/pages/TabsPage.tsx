@@ -1,4 +1,4 @@
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { Tabs } from '../components/Tabs';
 
 const tabs = [
@@ -9,16 +9,11 @@ const tabs = [
 
 export const TabsPage = () => {
   const { tabId } = useParams();
-  const navigate = useNavigate();
 
   return (
     <>
       <h1 className="title">Tabs page</h1>
-      <Tabs
-        tabs={tabs}
-        activeTabId={tabId}
-        onTabSelected={id => navigate(`/tabs/${id}`)}
-      />
+      <Tabs tabs={tabs} activeTabId={tabId} />
     </>
   );
 };

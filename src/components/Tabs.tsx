@@ -4,25 +4,22 @@ import { Tab } from '../types/Tab';
 type Props = {
   tabs: Tab[];
   activeTabId: string | undefined;
-  onTabSelected: (tabId: string) => void;
 };
 
-export const Tabs = ({ tabs, activeTabId, onTabSelected }: Props) => {
+export const Tabs = ({ tabs, activeTabId }: Props) => {
+  const activeTab = tabs.find(tab => tab.id === activeTabId);
+
   return (
     <>
-      <div className="tabs is-boxed">
+      <div className="tabs is-boxed" data-cy="TabsComponent">
         <ul>
           {tabs.map(tab => (
             <li
               key={tab.id}
               data-cy="Tab"
-              className={tab.id === activeTabId ? 'is-active' : ''}
+              className={tab.id === activeTab?.id ? 'is-active' : ''}
             >
-              <Link
-                to={`/tabs/${tab.id}`}
-                data-cy="TabLink"
-                onClick={() => onTabSelected(tab.id)}
-              >
+              <Link to={`/tabs/${tab.id}`} data-cy="TabLink">
                 {tab.title}
               </Link>
             </li>
@@ -31,8 +28,7 @@ export const Tabs = ({ tabs, activeTabId, onTabSelected }: Props) => {
       </div>
 
       <div className="block" data-cy="TabContent">
-        {tabs.find(tab => tab.id === activeTabId)?.content ??
-          'Please select a tab'}
+        {activeTab ? activeTab.content : 'Please select a tab'}
       </div>
     </>
   );
